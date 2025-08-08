@@ -1,0 +1,30 @@
+meta {
+  name: password update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{url}}/passwords/{{reset_token}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "password": "newpassword",
+    "password_confirmation": "newpassword"
+  }
+}
+
+headers {
+  Content-Type: application/json
+}
+
+assert {
+  res.status: in [200, 302]
+}
+
+settings {
+  encodeUrl: true
+}

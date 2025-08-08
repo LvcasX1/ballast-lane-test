@@ -1,0 +1,19 @@
+meta {
+  name: health up
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/up
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+}

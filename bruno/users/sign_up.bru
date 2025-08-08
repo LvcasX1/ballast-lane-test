@@ -30,6 +30,14 @@ assert {
   res.body.auth_token: isDefined
 }
 
+script:post-response {
+  if (res.getStatus() === 201) {
+    const responseData = res.getBody();
+    bru.setEnvVar("token", responseData.auth_token);
+    bru.setEnvVar("user_id", responseData.user.id);
+  }
+}
+
 tests {
   test("Sign up creates user successfully", function() {
     expect(res.status).to.equal(201);

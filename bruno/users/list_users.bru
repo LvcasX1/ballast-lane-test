@@ -1,0 +1,23 @@
+meta {
+  name: list users
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/users
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+}

@@ -7,6 +7,17 @@ Rails.application.routes.draw do
   # Custom registration endpoint
   post "sign-up", to: "users#create"
 
+  # Borrowings
+  resources :borrowings, only: [ :create, :show ] do
+    member do
+      post :return, to: "borrowings#return_book"
+    end
+  end
+
+  # Dashboards (root)
+  get "dashboard/librarian", to: "dashboards#librarian"
+  get "dashboard/member", to: "dashboards#member"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

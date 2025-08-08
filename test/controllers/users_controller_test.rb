@@ -2,37 +2,43 @@ require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @librarian = users(:librarian_one)
+    @member = users(:member_one)
   end
 
   test "should get index" do
-    get users_url, as: :json
+    get users_url, headers: auth_headers_for(@librarian), as: :json
     assert_response :success
   end
 
-  test "should create user" do
+  test "should sign up user via /sign-up" do
+    email = "user_#{SecureRandom.hex(4)}@example.com"
     assert_difference("User.count") do
-      post users_url, params: { user: { email: @user.email, name: @user.name } }, as: :json
+      post "/sign-up", params: { user: { name: "New User", email_address: email, password: "password", password_confirmation: "password" } }, as: :json
     end
-
     assert_response :created
+    body = JSON.parse(response.body)
+    assert body["auth_token"].present?
+    assert_equal "New User", body.dig("user", "name")
+    assert_equal email, body.dig("user", "email_address")
   end
 
   test "should show user" do
-    get user_url(@user), as: :json
+    get user_url(@member), headers: auth_headers_for(@librarian), as: :json
     assert_response :success
   end
 
   test "should update user" do
-    patch user_url(@user), params: { user: { email: @user.email, name: @user.name } }, as: :json
+    patch user_url(@member), params: { user: { name: "Updated Name" } }, headers: auth_headers_for(@librarian), as: :json
     assert_response :success
+    assert_equal "Updated Name", @member.reload.name
   end
 
   test "should destroy user" do
+    fresh = User.create!(name: "Temp", email_address: "temp_#{SecureRandom.hex(4)}@example.com", password: "password", password_confirmation: "password")
     assert_difference("User.count", -1) do
-      delete user_url(@user), as: :json
+      delete user_url(fresh), headers: auth_headers_for(@librarian), as: :json
     end
-
     assert_response :no_content
   end
 end

@@ -1,0 +1,33 @@
+meta {
+  name: update book
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{url}}/books/{{book_id}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "book": {
+      "title": "The Pragmatic Programmer (20th Anniversary Edition)",
+      "total_copies": 7
+    }
+  }
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+}

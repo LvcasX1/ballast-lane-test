@@ -1,0 +1,19 @@
+meta {
+  name: password reset new
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/passwords/new
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: in [200, 302]
+}
+
+settings {
+  encodeUrl: true
+}

@@ -14,4 +14,21 @@ class Book < ApplicationRecord
     books = books.search_by_isbn(params[:isbn])
     books
   end
+
+  def active_borrowings_count
+    borrowings.where(returned_at: nil).count
+  end
+
+  def available_copies
+    return 0 if total_copies.nil?
+    [ total_copies - active_borrowings_count, 0 ].max
+  end
+
+  def available?
+    available_copies > 0
+  end
+
+  def currently_borrowed_by?(user)
+    borrowings.exists?(user_id: user.id, returned_at: nil)
+  end
 end

@@ -1,0 +1,19 @@
+meta {
+  name: return borrowing
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/borrowings/{{borrowing_id}}/return
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+}

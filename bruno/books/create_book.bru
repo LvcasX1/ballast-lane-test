@@ -1,0 +1,44 @@
+meta {
+  name: create book
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/books
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "book": {
+      "title": "The Pragmatic Programmer",
+      "author": "Andrew Hunt, David Thomas",
+      "genre": "Programming",
+      "isbn": "978-0201616224",
+      "total_copies": 5
+    }
+  }
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 201
+  res.body.id: isDefined
+}
+
+script:post-response {
+  if (res.getStatus() === 201) {
+    const responseData = res.getBody();
+    bru.setEnvVar("book_id", responseData.id);
+  }
+}
+
+settings {
+  encodeUrl: true
+}

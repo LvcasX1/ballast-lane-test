@@ -1,0 +1,23 @@
+meta {
+  name: delete user
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{url}}/users/{{user_id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: in [200, 204]
+}
+
+settings {
+  encodeUrl: true
+}

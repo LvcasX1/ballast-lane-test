@@ -1,0 +1,40 @@
+meta {
+  name: borrow book
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/borrowings
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "book_id": {{book_id}}
+  }
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 201
+  res.body.id: isDefined
+  res.body.book_id: eq {{book_id}}
+  res.body.user_id: isDefined
+}
+
+script:post-response {
+  if (res.getStatus() === 201) {
+    const responseData = res.getBody();
+    bru.setEnvVar("borrowing_id", responseData.id);
+  }
+}
+
+settings {
+  encodeUrl: true
+}

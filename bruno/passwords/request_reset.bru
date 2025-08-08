@@ -1,0 +1,29 @@
+meta {
+  name: password reset request
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/passwords
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email_address": "member1@example.com"
+  }
+}
+
+headers {
+  Content-Type: application/json
+}
+
+assert {
+  res.status: in [200, 302]
+}
+
+settings {
+  encodeUrl: true
+}
