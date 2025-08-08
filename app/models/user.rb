@@ -4,4 +4,14 @@ class User < ApplicationRecord
   has_many :borrowings
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  enum role: { member: 0, librarian: 1 }
+
+  def librarian?
+    role == "librarian"
+  end
+
+  def member?
+    role == "member"
+  end
 end

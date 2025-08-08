@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show update destroy ]
+  before_action :require_librarian, except: [ :index ]
 
   # GET /books
   def index
@@ -47,5 +48,11 @@ class BooksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def book_params
       params.expect(book: [ :title, :author, :genre, :isbn, :total_copies ])
+    end
+
+    def require_librarian
+      unless Current.user&.librarian?
+        render json: { error: "Access denied." }, status: :forbidden
+      end
     end
 end

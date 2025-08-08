@@ -1,15 +1,211 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  author: MyString
-  genre: MyString
-  isbn: MyString
-  total_copies: 1
+book_1:
+  title: "To Kill a Mockingbird"
+  author: "Harper Lee"
+  genre: "Fiction"
+  isbn: "978-0-06-112008-4"
+  total_copies: 5
 
-two:
-  title: MyString
-  author: MyString
-  genre: MyString
-  isbn: MyString
-  total_copies: 1
+book_2:
+  title: "1984"
+  author: "George Orwell"
+  genre: "Dystopian Fiction"
+  isbn: "978-0-452-28423-4"
+  total_copies: 8
+
+book_3:
+  title: "Pride and Prejudice"
+  author: "Jane Austen"
+  genre: "Romance"
+  isbn: "978-0-14-143951-8"
+  total_copies: 3
+
+book_4:
+  title: "The Great Gatsby"
+  author: "F. Scott Fitzgerald"
+  genre: "Fiction"
+  isbn: "978-0-7432-7356-5"
+  total_copies: 6
+
+book_5:
+  title: "One Hundred Years of Solitude"
+  author: "Gabriel García Márquez"
+  genre: "Magical Realism"
+  isbn: "978-0-06-088328-7"
+  total_copies: 4
+
+book_6:
+  title: "The Catcher in the Rye"
+  author: "J.D. Salinger"
+  genre: "Fiction"
+  isbn: "978-0-316-76948-0"
+  total_copies: 7
+
+book_7:
+  title: "Brave New World"
+  author: "Aldous Huxley"
+  genre: "Science Fiction"
+  isbn: "978-0-06-085052-4"
+  total_copies: 5
+
+book_8:
+  title: "The Lord of the Rings"
+  author: "J.R.R. Tolkien"
+  genre: "Fantasy"
+  isbn: "978-0-544-00341-5"
+  total_copies: 2
+
+book_9:
+  title: "Jane Eyre"
+  author: "Charlotte Brontë"
+  genre: "Gothic Fiction"
+  isbn: "978-0-14-144114-6"
+  total_copies: 4
+
+book_10:
+  title: "The Hobbit"
+  author: "J.R.R. Tolkien"
+  genre: "Fantasy"
+  isbn: "978-0-547-92822-7"
+  total_copies: 6
+
+book_11:
+  title: "Fahrenheit 451"
+  author: "Ray Bradbury"
+  genre: "Dystopian Fiction"
+  isbn: "978-1-4516-7331-9"
+  total_copies: 5
+
+book_12:
+  title: "Wuthering Heights"
+  author: "Emily Brontë"
+  genre: "Gothic Fiction"
+  isbn: "978-0-14-143955-6"
+  total_copies: 3
+
+book_13:
+  title: "The Chronicles of Narnia"
+  author: "C.S. Lewis"
+  genre: "Fantasy"
+  isbn: "978-0-06-623851-4"
+  total_copies: 4
+
+book_14:
+  title: "Crime and Punishment"
+  author: "Fyodor Dostoevsky"
+  genre: "Psychological Fiction"
+  isbn: "978-0-14-044913-6"
+  total_copies: 2
+
+book_15:
+  title: "The Alchemist"
+  author: "Paulo Coelho"
+  genre: "Philosophical Fiction"
+  isbn: "978-0-06-231500-7"
+  total_copies: 8
+
+book_16:
+  title: "Moby Dick"
+  author: "Herman Melville"
+  genre: "Adventure Fiction"
+  isbn: "978-0-14-243724-7"
+  total_copies: 3
+
+book_17:
+  title: "The Picture of Dorian Gray"
+  author: "Oscar Wilde"
+  genre: "Gothic Fiction"
+  isbn: "978-0-14-143957-0"
+  total_copies: 4
+
+book_18:
+  title: "Don Quixote"
+  author: "Miguel de Cervantes"
+  isbn: "978-0-06-093434-4"
+  genre: "Adventure Fiction"
+  total_copies: 2
+
+book_19:
+  title: "The Kite Runner"
+  author: "Khaled Hosseini"
+  genre: "Historical Fiction"
+  isbn: "978-1-59448-000-3"
+  total_copies: 6
+
+book_20:
+  title: "Life of Pi"
+  author: "Yann Martel"
+  genre: "Adventure Fiction"
+  isbn: "978-0-15-100811-7"
+  total_copies: 5
+
+book_21:
+  title: "The Book Thief"
+  author: "Markus Zusak"
+  genre: "Historical Fiction"
+  isbn: "978-0-375-84220-7"
+  total_copies: 7
+
+book_22:
+  title: "Beloved"
+  author: "Toni Morrison"
+  genre: "Historical Fiction"
+  isbn: "978-1-4000-3341-6"
+  total_copies: 3
+
+book_23:
+  title: "The Handmaid's Tale"
+  author: "Margaret Atwood"
+  genre: "Dystopian Fiction"
+  isbn: "978-0-385-49081-8"
+  total_copies: 6
+
+book_24:
+  title: "Dune"
+  author: "Frank Herbert"
+  genre: "Science Fiction"
+  isbn: "978-0-441-17271-9"
+  total_copies: 4
+
+book_25:
+  title: "The Road"
+  author: "Cormac McCarthy"
+  genre: "Post-Apocalyptic Fiction"
+  isbn: "978-0-307-38789-9"
+  total_copies: 5
+
+book_26:
+  title: "Harry Potter and the Philosopher's Stone"
+  author: "J.K. Rowling"
+  genre: "Fantasy"
+  isbn: "978-0-439-70818-8"
+  total_copies: 10
+
+book_27:
+  title: "The Da Vinci Code"
+  author: "Dan Brown"
+  genre: "Mystery Thriller"
+  isbn: "978-0-307-47427-5"
+  total_copies: 8
+
+book_28:
+  title: "Gone Girl"
+  author: "Gillian Flynn"
+  genre: "Psychological Thriller"
+  isbn: "978-0-307-58836-4"
+  total_copies: 6
+
+book_29:
+  title: "The Girl with the Dragon Tattoo"
+  author: "Stieg Larsson"
+  genre: "Crime Thriller"
+  isbn: "978-0-307-45454-1"
+  total_copies: 7
+
+book_30:
+  title: "Where the Crawdads Sing"
+  author: "Delia Owens"
+  genre: "Mystery Fiction"
+  isbn: "978-0-399-16415-8"
+  total_copies: 9
