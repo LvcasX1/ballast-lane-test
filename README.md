@@ -34,29 +34,42 @@ PostgreSQL setup (local or Docker):
 Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `postgres`, and password `test`.
 
 4) Run the server
-- bin/dev (if available), or:
-  - bin/rails s
+  - `bin/rails s` or `rails server`
 
 5) Run tests
-- bin/rails test
+  - `bin/rails test` or `rails test`
 
 ## Default users (from fixtures)
 - Librarian: librarian1@library.com / password
 - Member:    member1@example.com / password
 
 ## Authentication
-- Sign up: POST /sign-up (returns `auth_token`)
-- Log in:  POST /session (returns `auth_token`)
-- Log out: DELETE /session
+- Sign up: `POST /sign-up` (returns `auth_token`)
+- Log in:  `POST /session` (returns `auth_token`)
+- Log out: `DELETE /session`
 - Send `Authorization: Bearer <token>` on subsequent requests
 
 ## Key endpoints
-- Books: GET /books, GET /books/:id, POST /books, PATCH/PUT /books/:id, DELETE /books/:id
+- Books: 
+  - `GET /books`
+  - `GET /books/:id`
+  - `POST /books`
+  - `PATCH/PUT /books/:id`
+  - `DELETE /books/:id`
   - Requires auth. Create/Update/Delete require librarian role.
-- Users: GET /users, GET /users/:id, PATCH/PUT /users/:id, DELETE /users/:id
-  - Sign up via POST /sign-up (no auth). Others require auth.
-- Borrowings: POST /borrowings (member only), GET /borrowings/:id, POST /borrowings/:id/return (librarian only)
-- Dashboards: GET /dashboard/librarian (librarian), GET /dashboard/member (member)
+- Users: 
+  - `GET /users`
+  - `GET /users/:id`
+  - `PATCH/PUT /users/:id`
+  - `DELETE /users/:id`
+  - Sign up via `POST /sign-up` (no auth). Others require auth.
+- Borrowings: 
+  - `POST /borrowings` (member only)
+  - `GET /borrowings/:id`
+  - `POST /borrowings/:id/retur` (librarian only)
+- Dashboards: 
+  - `GET /dashboard/librarian` (librarian)
+  - `GET /dashboard/member` (member)
 
 ## Bruno API collection
 A Bruno collection is included in `bruno/` with a `local` environment.
