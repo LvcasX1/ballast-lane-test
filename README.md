@@ -7,7 +7,7 @@ A Rails 8 API-only application for a simple library system. It supports users (m
 - PostgreSQL, Puma, Rack 3
 - Auth: token via `Authorization: Bearer <token>`
 
-## Quick start (macOS)
+## Quick start
 1) Prerequisites
 - Ruby 3.4.x (rbenv/rvm)
 - PostgreSQL running locally, you can use the following command:
@@ -75,6 +75,37 @@ Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `pos
 A Bruno collection is included in `bruno/` with a `local` environment.
 - Set `{{url}}` and use the `session/login` request to obtain a token.
 - Use librarian login for book admin and returns, member login for borrowing.
+
+Setup Bruno
+1. Install Bruno
+   - macOS (Homebrew):
+     ```sh
+     brew install --cask bruno
+     ```
+   - Or download installer: https://www.usebruno.com/downloads
+2. Load this project’s collection
+   - Open Bruno → File → Open Collection…
+   - Select the repository’s `bruno/` folder (or the `bruno/bruno.json` file).
+   - You should see folders like: `session`, `users`, `books`, `borrowings`, `api`, and `environments`.
+3. Select environment: choose `environments/local` and set variables:
+   - url: `http://localhost:3000`
+   - token: leave empty (it will be set by login requests)
+   - book_id, user_id, borrowing_id, reset_token: optional; many are auto-populated by scripts
+4. Authenticate:
+   - Run `session/login.bru` for a librarian or `session/login_member.bru` for a member.
+   - The post-response script stores `auth_token` into the `token` env var.
+5. Exercise endpoints:
+   - `books/create_book.bru` captures `book_id` into the environment.
+   - `borrowings/create.bru` uses `{{book_id}}` and saves `borrowing_id`.
+   - `borrowings/return.bru` requires a librarian token.
+   - Dashboards: `api/librarian_dashboard.bru` (librarian) and `api/member_dashboard.bru` (member).
+6. Password reset flow:
+   - `passwords/request_reset.bru` triggers email delivery; set `reset_token` manually in the environment to test `edit`/`update` requests.
+7. Reset/rotate token:
+   - Run `session/logout.bru` or clear the `token` variable in the environment.
+
+Note
+- Requests include `Authorization: Bearer {{token}}` headers; ensure the environment is selected before running.
 
 ## Diagrams
 
