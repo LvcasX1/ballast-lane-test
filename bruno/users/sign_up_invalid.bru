@@ -1,0 +1,37 @@
+meta {
+  name: sign up invalid
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/sign-up
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user": {
+      "name": "",
+      "email_address": "invalid-email",
+      "password": "123",
+      "password_confirmation": "different"
+    }
+  }
+}
+
+assert {
+  res.status: eq 422
+  res.body.message: eq "Registration failed"
+  res.body.errors: isDefined
+}
+
+tests {
+  test("Invalid sign up returns errors", function() {
+    expect(res.status).to.equal(422);
+    expect(res.body.message).to.equal("Registration failed");
+    expect(res.body.errors).to.be.an('array');
+    expect(res.body.errors.length).to.be.greaterThan(0);
+  });
+}
