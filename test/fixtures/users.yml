@@ -2,22 +2,26 @@
 
 # Librarians
 librarian_one:
-  email_address: librarian1@library.com
+  name: "John Librarian"
+  email_address: "librarian1@library.com"
   password_digest: <%= password_digest %>
   role: 1
 
 librarian_two:
-  email_address: librarian2@library.com
+  name: "Jane Librarian"
+  email_address: "librarian2@library.com"
   password_digest: <%= password_digest %>
   role: 1
 
 # Members
 member_one:
-  email_address: member1@example.com
+  name: "Alice Member"
+  email_address: "member1@example.com"
   password_digest: <%= password_digest %>
   role: 0
 
 member_two:
-  email_address: member2@example.com
+  name: "Bob Member"
+  email_address: "member2@example.com"
   password_digest: <%= password_digest %>
   role: 0
