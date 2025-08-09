@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     member do
       post :return, to: "borrowings#return_book"
     end
+    collection do
+      get :current
+    end
   end
 
   # Dashboards (root)

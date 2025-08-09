@@ -72,9 +72,11 @@ Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `pos
   - `PATCH/PUT /borrowings/:id` (librarian only; update `due_date`)
   - `DELETE /borrowings/:id` (librarian only)
   - `POST /borrowings/:id/return` (librarian only)
+  - `GET /borrowings/current` (active and not overdue; librarian sees all, member sees own). Response fields include `user_name` and `book_title`.
 - 📊 Dashboards: 
   - `GET /dashboard/librarian` (librarian)
   - `GET /dashboard/member` (member)
+  - Librarian overdue entries include `borrowing_id` alongside `book_id`, `title`, and `due_date`.
 
 ## 🧪 Bruno API collection
 A Bruno collection is included in `bruno/` with a `local` environment.
@@ -108,6 +110,7 @@ Setup Bruno
    - `borrowings/update.bru` updates `due_date` (librarian, uses `{{new_due_date}}`).
    - `borrowings/return.bru` marks returned (librarian).
    - `borrowings/destroy.bru` deletes a borrowing (librarian).
+   - `borrowings/current.bru` lists current, not overdue borrowings.
    - Dashboards: `api/librarian_dashboard.bru` (librarian) and `api/member_dashboard.bru` (member).
 6. Password reset flow:
    - `passwords/request_reset.bru` triggers email delivery; set `reset_token` manually in the environment to test `edit`/`update` requests.

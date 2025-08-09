@@ -12,7 +12,7 @@ class DashboardsController < ApplicationController
     overdue_by_member = Borrowing.overdue
       .includes(:user, :book)
       .group_by(&:user)
-      .transform_values { |borrows| borrows.map { |b| { book_id: b.book_id, title: b.book.title, due_date: b.due_date } } }
+      .transform_values { |borrows| borrows.map { |b| { borrowing_id: b.id, book_id: b.book_id, title: b.book.title, due_date: b.due_date } } }
 
     render json: {
       total_books: total_books,

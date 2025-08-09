@@ -1,0 +1,23 @@
+meta {
+  name: librarian dashboard
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/dashboards/librarian
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+}

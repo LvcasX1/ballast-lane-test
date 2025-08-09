@@ -16,6 +16,7 @@ class Borrowing < ApplicationRecord
     active.where(due_date: range)
   }
   scope :overdue, -> { active.where("due_date < ?", Time.current) }
+  scope :not_overdue, -> { active.where("due_date > ?", Time.current) }
 
   def return!
     update!(returned_at: Time.current)

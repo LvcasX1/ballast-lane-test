@@ -70,6 +70,13 @@ class BorrowingsController < ApplicationController
     render json: borrowing_response(@borrowing), status: :ok
   end
 
+  # GET /borrowings/current
+  def current
+    scope = current_user.librarian? ? Borrowing.not_overdue : current_user.borrowings.not_overdue
+    scope = scope.includes(:user, :book).order(due_date: :asc)
+    render json: scope.map { |b| borrowing_current_response(b) }
+  end
+
   private
 
   def set_book
@@ -78,7 +85,8 @@ class BorrowingsController < ApplicationController
   end
 
   def set_borrowing
-    @borrowing = Borrowing.find(params[:id])
+    @borrowing = Borrowing.find_by(id: params[:id])
+    render json: { error: "Borrowing not found" }, status: :not_found unless @borrowing
   end
 
   def borrowing_params
@@ -90,6 +98,17 @@ class BorrowingsController < ApplicationController
       id: b.id,
       user_id: b.user_id,
       book_id: b.book_id,
+      borrowed_at: b.borrowed_at,
+      due_date: b.due_date,
+      returned_at: b.returned_at
+    }
+  end
+
+  def borrowing_current_response(b)
+    {
+      id: b.id,
+      user_name: b.user&.name,
+      book_title: b.book&.title,
       borrowed_at: b.borrowed_at,
       due_date: b.due_date,
       returned_at: b.returned_at

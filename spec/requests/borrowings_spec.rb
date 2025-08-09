@@ -108,4 +108,38 @@ RSpec.describe 'Borrowings', type: :request do
     }.not_to change(Borrowing, :count)
     expect(response).to have_http_status(:forbidden)
   end
+
+  it 'lists current (not overdue) borrowings for librarian' do
+    b_current = Borrowing.create!(user: member, book: book, borrowed_at: 1.day.ago, due_date: 2.weeks.from_now)
+    b_overdue = Borrowing.create!(user: member2, book: books(:book_2), borrowed_at: 3.weeks.ago, due_date: 1.day.ago)
+
+    get '/borrowings/current', headers: auth_headers_for(librarian)
+    expect(response).to have_http_status(:ok)
+    body = JSON.parse(response.body)
+    ids = body.map { |h| h['id'] }
+    expect(ids).to include(b_current.id)
+    expect(ids).not_to include(b_overdue.id)
+    if body.any?
+      first = body.first
+      expect(first).to include('user_name', 'book_title')
+      expect(first).not_to include('user_id', 'book_id')
+    end
+  end
+
+  it 'lists only own current (not overdue) borrowings for member' do
+    own_current = Borrowing.create!(user: member, book: book, borrowed_at: 1.day.ago, due_date: 2.weeks.from_now)
+    others_current = Borrowing.create!(user: member2, book: books(:book_2), borrowed_at: 1.day.ago, due_date: 2.weeks.from_now)
+
+    get '/borrowings/current', headers: auth_headers_for(member)
+    expect(response).to have_http_status(:ok)
+    body = JSON.parse(response.body)
+    ids = body.map { |h| h['id'] }
+    expect(ids).to include(own_current.id)
+    expect(ids).not_to include(others_current.id)
+    if body.any?
+      first = body.first
+      expect(first).to include('user_name', 'book_title')
+      expect(first).not_to include('user_id', 'book_id')
+    end
+  end
 end
