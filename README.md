@@ -162,61 +162,6 @@ graph LR
   Client --> Rails --> Ctrls --> Models --> PG
 ```
 
-### 🧾 Class diagram
-```mermaid
-classDiagram
-  class User {
-    +id: bigint
-    +email_address: string
-    +password_digest: string
-    +name: string
-    +role: enum(member,librarian)
-    +auth_token: string
-    +created_at: datetime
-    +updated_at: datetime
-    +regenerate_auth_token!()
-  }
-
-  class Book {
-    +id: bigint
-    +title: string
-    +author: string
-    +genre: string
-    +isbn: string
-    +total_copies: integer
-    +borrowings_count: integer
-    +created_at: datetime
-    +updated_at: datetime
-    +available?(): boolean
-    +available_copies(): integer
-  }
-
-  class Borrowing {
-    +id: bigint
-    +user_id: bigint
-    +book_id: bigint
-    +borrowed_at: datetime
-    +due_date: datetime
-    +returned_at: datetime
-    +created_at: datetime
-    +updated_at: datetime
-    +return!()
-  }
-
-  class Session {
-    +id: bigint
-    +user_id: bigint
-    +ip_address: string
-    +user_agent: string
-    +created_at: datetime
-    +updated_at: datetime
-  }
-
-  User "1" --> "many" Session
-  User "1" --> "many" Borrowing
-  Book "1" --> "many" Borrowing
-```
-
 ### 🔁 Sequence: Member borrows a book
 ```mermaid
 sequenceDiagram
