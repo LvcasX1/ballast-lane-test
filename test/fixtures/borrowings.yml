@@ -13,3 +13,49 @@ two:
   borrowed_at: 2025-08-07 18:13:05
   due_date: 2025-08-07 18:13:05
   returned_at: 2025-08-07 18:13:05
+
+# Additional cases
+three_active_member_one_book1:
+  user: member_one
+  book: book_1
+  borrowed_at: <%= 3.days.ago %>
+  due_date: <%= 11.days.from_now %>
+
+four_overdue_member_one_book2:
+  user: member_one
+  book: book_2
+  borrowed_at: <%= 3.weeks.ago %>
+  due_date: <%= 1.week.ago %>
+
+five_returned_member_two_book3:
+  user: member_two
+  book: book_3
+  borrowed_at: <%= 20.days.ago %>
+  due_date: <%= 6.days.ago %>
+  returned_at: <%= 5.days.ago %>
+
+six_active_member_two_book1:
+  user: member_two
+  book: book_1
+  borrowed_at: <%= 1.day.ago %>
+  due_date: <%= 13.days.from_now %>
+
+seven_overdue_member_two_book4:
+  user: member_two
+  book: book_4
+  borrowed_at: <%= 1.month.ago %>
+  due_date: <%= 2.weeks.ago %>
+
+eight_returned_member_one_book5:
+  user: member_one
+  book: book_5
+  borrowed_at: <%= 10.days.ago %>
+  due_date: <%= 3.days.ago %>
+  returned_at: <%= 2.days.ago %>
+
+nine_returned_member_one_book1_previous:
+  user: member_one
+  book: book_1
+  borrowed_at: <%= 40.days.ago %>
+  due_date: <%= 26.days.ago %>
+  returned_at: <%= 25.days.ago %>

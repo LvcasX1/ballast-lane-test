@@ -4,14 +4,14 @@ class BooksController < ApplicationController
 
   # GET /books
   def index
-    @books = Book.search(params.permit(:title, :author, :genre, :isbn))
+    @books = Book.search(filters)
 
-    render json: @books
+    render json: @books.as_json(methods: :borrowings_count)
   end
 
   # GET /books/1
   def show
-    render json: @book
+    render json: @book.as_json(methods: :borrowings_count)
   end
 
   # POST /books

@@ -1,6 +1,6 @@
 class Borrowing < ApplicationRecord
   belongs_to :user
-  belongs_to :book
+  belongs_to :book, counter_cache: true
 
   validates :user_id, presence: true
   validates :book_id, presence: true

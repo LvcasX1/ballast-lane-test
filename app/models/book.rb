@@ -31,4 +31,9 @@ class Book < ApplicationRecord
   def currently_borrowed_by?(user)
     borrowings.exists?(user_id: user.id, returned_at: nil)
   end
+
+  # Prefer the counter_cache column when available
+  def borrowings_count
+    self[:borrowings_count].presence || borrowings.count
+  end
 end
