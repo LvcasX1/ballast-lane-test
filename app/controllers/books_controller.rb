@@ -4,7 +4,7 @@ class BooksController < ApplicationController
 
   # GET /books
   def index
-    @books = Book.all
+    @books = Book.search(params.permit(:title, :author, :genre, :isbn))
 
     render json: @books
   end

@@ -1,0 +1,23 @@
+meta {
+  name: delete borrowing
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{url}}/borrowings/{{borrowing_id}}
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 204
+}
+
+settings {
+  encodeUrl: true
+}

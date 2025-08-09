@@ -1,0 +1,32 @@
+meta {
+  name: update borrowing
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{url}}/borrowings/{{borrowing_id}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "borrowing": {
+      "due_date": "{{new_due_date}}"
+    }
+  }
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+settings {
+  encodeUrl: true
+}

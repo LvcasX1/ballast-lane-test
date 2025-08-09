@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post "sign-up", to: "users#create"
 
   # Borrowings
-  resources :borrowings, only: [ :create, :show ] do
+  resources :borrowings, only: [ :index, :create, :show, :update, :destroy ] do
     member do
       post :return, to: "borrowings#return_book"
     end

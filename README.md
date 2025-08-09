@@ -58,6 +58,7 @@ Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `pos
   - `PATCH/PUT /books/:id`
   - `DELETE /books/:id`
   - Requires auth. Create/Update/Delete require librarian role.
+  - Search support: filter with query params `title`, `author`, `genre`, `isbn` (e.g., `/books?title=Dune&author=Herbert`).
 - Users: 
   - `GET /users`
   - `GET /users/:id`
@@ -65,9 +66,12 @@ Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `pos
   - `DELETE /users/:id`
   - Sign up via `POST /sign-up` (no auth). Others require auth.
 - Borrowings: 
+  - `GET /borrowings` (librarian: all records; member: only own)
+  - `GET /borrowings/:id` (librarian or owner)
   - `POST /borrowings` (member only)
-  - `GET /borrowings/:id`
-  - `POST /borrowings/:id/retur` (librarian only)
+  - `PATCH/PUT /borrowings/:id` (librarian only; update `due_date`)
+  - `DELETE /borrowings/:id` (librarian only)
+  - `POST /borrowings/:id/return` (librarian only)
 - Dashboards: 
   - `GET /dashboard/librarian` (librarian)
   - `GET /dashboard/member` (member)
@@ -91,14 +95,19 @@ Setup Bruno
 3. Select environment: choose `environments/local` and set variables:
    - url: `http://localhost:3000`
    - token: leave empty (it will be set by login requests)
-   - book_id, user_id, borrowing_id, reset_token: optional; many are auto-populated by scripts
+   - book_id, user_id, borrowing_id, reset_token
+   - new_due_date: optional ISO8601 string used by the borrowings update request (e.g., `2099-01-01T00:00:00Z`)
 4. Authenticate:
    - Run `session/login.bru` for a librarian or `session/login_member.bru` for a member.
    - The post-response script stores `auth_token` into the `token` env var.
 5. Exercise endpoints:
    - `books/create_book.bru` captures `book_id` into the environment.
+   - `borrowings/index.bru` lists borrowings (scope depends on role).
    - `borrowings/create.bru` uses `{{book_id}}` and saves `borrowing_id`.
-   - `borrowings/return.bru` requires a librarian token.
+   - `borrowings/show.bru` fetches a borrowing by id.
+   - `borrowings/update.bru` updates `due_date` (librarian, uses `{{new_due_date}}`).
+   - `borrowings/return.bru` marks returned (librarian).
+   - `borrowings/destroy.bru` deletes a borrowing (librarian).
    - Dashboards: `api/librarian_dashboard.bru` (librarian) and `api/member_dashboard.bru` (member).
 6. Password reset flow:
    - `passwords/request_reset.bru` triggers email delivery; set `reset_token` manually in the environment to test `edit`/`update` requests.
