@@ -37,7 +37,8 @@ Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `pos
   - `bin/rails s` or `rails server`
 
 5) Run tests
-  - `bin/rails test` or `rails test`
+  - `bundle exec rspec` (RSpec)
+  - or legacy Minitest: `bin/rails test` (some tests may be removed as we migrate)
 
 ## Default users (from fixtures)
 - Librarian: librarian1@library.com / password
@@ -174,3 +175,10 @@ sequenceDiagram
 - Ensure Postgres is running and `config/database.yml` is correct.
 - If fixtures don't load: confirm `test/fixtures/` exists and run with `RAILS_ENV=development`.
 - Logs: `log/development.log`.
+
+## Testing
+This project uses RSpec for the test suite.
+- Prepare DB: `RAILS_ENV=test bin/rails db:prepare`
+- Run all specs: `bundle exec rspec`
+- Run a single spec: `bundle exec rspec spec/requests/books_spec.rb`
+- Run by example description: `bundle exec rspec spec -e "creates a book"`
