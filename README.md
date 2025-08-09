@@ -1,13 +1,13 @@
-# Ballast Lane Test – Rails API
+# 📚 Ballast Lane Test – Rails API
 
 A Rails 8 API-only application for a simple library system. It supports users (members and librarians), session-based token auth (Bearer tokens), books CRUD, borrowing/return flows, and role-based dashboards.
 
-## Tech stack
+## 🧰 Tech stack
 - Ruby 3.4.x, Rails 8 (API-only)
 - PostgreSQL, Puma, Rack 3
 - Auth: token via `Authorization: Bearer <token>`
 
-## Quick start
+## 🚀 Quick start
 1) Prerequisites
 - Ruby 3.4.x (rbenv/rvm)
 - PostgreSQL running locally, you can use the following command:
@@ -33,50 +33,50 @@ PostgreSQL setup (local or Docker):
 
 Then point `config/database.yml` to host `localhost` (or `127.0.0.1`), user `postgres`, and password `test`.
 
-4) Run the server
+4) ▶️ Run the server
   - `bin/rails s` or `rails server`
 
-5) Run tests
+5) 🧪 Run tests
   - `bundle exec rspec` (RSpec)
   - or legacy Minitest: `bin/rails test` (some tests may be removed as we migrate)
 
-## Default users (from fixtures)
+## 👤 Default users (from fixtures)
 - Librarian: librarian1@library.com / password
 - Member:    member1@example.com / password
 
-## Authentication
+## 🔐 Authentication
 - Sign up: `POST /sign-up` (returns `auth_token`)
 - Log in:  `POST /session` (returns `auth_token`)
 - Log out: `DELETE /session`
 - Send `Authorization: Bearer <token>` on subsequent requests
 
-## Key endpoints
-- Books: 
+## 🔗 Key endpoints
+- 📚 Books: 
   - `GET /books`
   - `GET /books/:id`
   - `POST /books`
   - `PATCH/PUT /books/:id`
   - `DELETE /books/:id`
-  - Requires auth. Create/Update/Delete require librarian role.
+  - Index and show are public; create/update/delete require librarian role.
   - Search support: filter with query params `title`, `author`, `genre`, `isbn` (e.g., `/books?title=Dune&author=Herbert`).
-- Users: 
+- 👥 Users: 
   - `GET /users`
   - `GET /users/:id`
   - `PATCH/PUT /users/:id`
   - `DELETE /users/:id`
   - Sign up via `POST /sign-up` (no auth). Others require auth.
-- Borrowings: 
+- 📖 Borrowings: 
   - `GET /borrowings` (librarian: all records; member: only own)
   - `GET /borrowings/:id` (librarian or owner)
   - `POST /borrowings` (member only)
   - `PATCH/PUT /borrowings/:id` (librarian only; update `due_date`)
   - `DELETE /borrowings/:id` (librarian only)
   - `POST /borrowings/:id/return` (librarian only)
-- Dashboards: 
+- 📊 Dashboards: 
   - `GET /dashboard/librarian` (librarian)
   - `GET /dashboard/member` (member)
 
-## Bruno API collection
+## 🧪 Bruno API collection
 A Bruno collection is included in `bruno/` with a `local` environment.
 - Set `{{url}}` and use the `session/login` request to obtain a token.
 - Use librarian login for book admin and returns, member login for borrowing.
@@ -117,9 +117,9 @@ Setup Bruno
 Note
 - Requests include `Authorization: Bearer {{token}}` headers; ensure the environment is selected before running.
 
-## Diagrams
+## 🗺️ Diagrams
 
-### High-level flow
+### 🧭 High-level flow
 ```mermaid
 flowchart LR
   subgraph Client
@@ -147,7 +147,7 @@ flowchart LR
   D  --> BK & BR
 ```
 
-### Components
+### 🧱 Components
 ```mermaid
 graph LR
   Client[API Clients / Bruno]
@@ -159,7 +159,62 @@ graph LR
   Client --> Rails --> Ctrls --> Models --> PG
 ```
 
-### Sequence: Member borrows a book
+### 🧾 Class diagram
+```mermaid
+classDiagram
+  class User {
+    +id: bigint
+    +email_address: string
+    +password_digest: string
+    +name: string
+    +role: enum(member,librarian)
+    +auth_token: string
+    +created_at: datetime
+    +updated_at: datetime
+    +regenerate_auth_token!()
+  }
+
+  class Book {
+    +id: bigint
+    +title: string
+    +author: string
+    +genre: string
+    +isbn: string
+    +total_copies: integer
+    +borrowings_count: integer
+    +created_at: datetime
+    +updated_at: datetime
+    +available?(): boolean
+    +available_copies(): integer
+  }
+
+  class Borrowing {
+    +id: bigint
+    +user_id: bigint
+    +book_id: bigint
+    +borrowed_at: datetime
+    +due_date: datetime
+    +returned_at: datetime
+    +created_at: datetime
+    +updated_at: datetime
+    +return!()
+  }
+
+  class Session {
+    +id: bigint
+    +user_id: bigint
+    +ip_address: string
+    +user_agent: string
+    +created_at: datetime
+    +updated_at: datetime
+  }
+
+  User "1" --> "many" Session
+  User "1" --> "many" Borrowing
+  Book "1" --> "many" Borrowing
+```
+
+### 🔁 Sequence: Member borrows a book
 ```mermaid
 sequenceDiagram
   participant C as Client
@@ -176,16 +231,16 @@ sequenceDiagram
   B-->>C: 201 { borrowing payload }
 ```
 
-## Notes
+## 📝 Notes
 - Status 422 is named 'Unprocessable Content' per RFC 9110; use `status: :unprocessable_content`.
-- All non-sign-up endpoints require authentication; librarian-only endpoints are enforced server-side.
+- Most endpoints require authentication. Books index/show are public; librarian-only endpoints are enforced server-side.
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 - Ensure Postgres is running and `config/database.yml` is correct.
 - If fixtures don't load: confirm `test/fixtures/` exists and run with `RAILS_ENV=development`.
 - Logs: `log/development.log`.
 
-## Testing
+## ✅ Testing
 This project uses RSpec for the test suite.
 - Prepare DB: `RAILS_ENV=test bin/rails db:prepare`
 - Run all specs: `bundle exec rspec`

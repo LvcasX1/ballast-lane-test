@@ -1,10 +1,11 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show update destroy ]
   before_action :require_librarian, except: [ :index ]
+  allow_unauthenticated_access only: %i[ index show ]
 
   # GET /books
   def index
-    @books = Book.search(filters)
+    @books = Book.search(request.query_parameters)
 
     render json: @books.as_json(methods: :borrowings_count)
   end

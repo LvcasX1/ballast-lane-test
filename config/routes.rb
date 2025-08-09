@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   end
 
   # Dashboards (root)
-  get "dashboard/librarian", to: "dashboards#librarian"
-  get "dashboard/member", to: "dashboards#member"
+  get "dashboards/librarian", to: "dashboards#librarian"
+  get "dashboards/member", to: "dashboards#member"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
